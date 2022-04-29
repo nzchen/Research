@@ -24,16 +24,19 @@ while(1):
         break;
     getData=str(ser.readline())
     data =getData[2:][:-5]
-    timeData = getData[2:][:-14]
-    dataData = getData[7:][:-5]
+    #timeData = getData[2:][:-14]
+    #dataData = getData[7:][:-5]
+    timeData = str.split(getData)[0][2:]
+    dataData = str.split(getData)[1][:-5]
+
     print(data)
     
     #add the data to the file
     file = open(fileName, "a") #append the data to the file
     file.write(dataData + "\n") #write data with a newline
     
-    timeDataList.append(getData[2:][:-14])
-    dataDataList.append(getData[7:][:-5])
+    timeDataList.append(timeData)
+    dataDataList.append(dataData)
 
 #make mapping list
 combinedList = list (map (  lambda x,y: [x,y], timeDataList,dataDataList    ))
