@@ -1,6 +1,7 @@
 import serial
 import keyboard
 import matplotlib.pyplot as plt
+import csv
 
 arduino_port = "COM7" #serial port of Arduino
 baud = 9600 #arduino uno runs at 9600 baud
@@ -11,12 +12,11 @@ ser = serial.Serial(arduino_port, baud)
 print("Connected to Arduino port:" + arduino_port)
 file = open(fileName, "a")
 print("Created file")
+writer = csv.writer(file)
 
-#userinput = input("Enter q to quit\n")
-#reading at 10 samples a second 
-s = 0 
-x = []
-y = []
+timeDataList = []
+dataDataList = []
+
 #display the data to the terminal
 while(1):
     if(keyboard.is_pressed('q')):
@@ -24,18 +24,36 @@ while(1):
         break;
     getData=str(ser.readline())
     data =getData[2:][:-5]
+    timeData = getData[2:][:-14]
+    dataData = getData[7:][:-5]
     print(data)
-
+    
     #add the data to the file
     file = open(fileName, "a") #append the data to the file
-    file.write(data + "\n") #write data with a newline
-    x.append(s)
-    y.append(data)
-    s=s+1
-    #print(s)    
+    file.write(dataData + "\n") #write data with a newline
+    
+    timeDataList.append(getData[2:][:-14])
+    dataDataList.append(getData[7:][:-5])
+
+#make mapping list
+combinedList = list (map (  lambda x,y: [x,y], timeDataList,dataDataList    ))
+
+#add to CSV File
+# name of csv file 
+filename = file_name+"_Combined_Data"+".csv"
+fields = ['time', 'data']
+# writing to csv file 
+with open(filename, 'w', newline='', encoding='utf-8') as csvfile: 
+    # creating a csv writer object 
+    csvwriter = csv.writer(csvfile) 
+    # writing the fields 
+    csvwriter.writerow(fields) 
+    # writing the data rows 
+    csvwriter.writerows(combinedList)
 
 #close out the file
 file.close()
-plt.plot(x, y)
-plt.show()
+#plt.plot(timeDataList, dataDataList)
+#plt.show()
 
+  
