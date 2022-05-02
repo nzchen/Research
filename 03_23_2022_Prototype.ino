@@ -2,7 +2,7 @@
 #include <Adafruit_ADS1X15.h>
 
  
-Adafruit_ADS1115 ads;
+Adafruit_ADS1115 ads;         
 const float multiplier = 0.1875F;
 char dataStr[100] = "";
 char buffer[7];
@@ -39,37 +39,6 @@ void loop() {
   Serial.print(" ");
   start_time+=0.1;
   Serial.println(volts0,6);
-  //volts0 = adc0*(0.256f / (32768 >> 0));
-  //Serial.println("-----------------------------------------------------------");
-  //Serial.print("AIN0: "); Serial.print(adc0); Serial.print("  "); Serial.print(volts0, 6); Serial.println("V");
-  
-
-  /*
-   //convert floats to string and assemble c-type char string for writing:
-  ltoa( millis(),buffer,10); //convert long to charStr
-  strcat(dataStr, buffer); //add it to the end
-   strcat( dataStr, ", "); //append the delimiter
- 
-  //dtostrf(floatVal, minimum width, precision, character array);
-  dtostrf(volts0, 5, 1, buffer);  //5 is minimum width, 1 is precision; float value is copied onto buff
-  strcat( dataStr, buffer); //append the converted float
-  strcat( dataStr, ", "); //append the delimiter
-
-  */
-  // put your main code here, to run repeatedly:
-  //int16_t adc0, adc1, adc2, adc3;
-  //adc0.setMultiplexer(ADS1115_MUX_P1_NG);
-
-  //adc0.setGain(ADS1115_PGA_6P144);
-  //adc0.triggerConversion();
-  //pollAlertReadyPin();
-  //Serial.print("A0: "); Serial.print(adc0.getMilliVolts(false),3); Serial.print("mV\t");
-  //Serial.println(" PGA: 6144 mv acc: 187.5uV");
-  
-  //int16_t adc0, adc1, adc2, adc3;
-  //adc0 = ads.readADC_SingleEnded(0);
-  //Serial.print("AIN0: "); Serial.println(adc0);
-  //Serial.println(" ");
   
   delay(100);
 }
